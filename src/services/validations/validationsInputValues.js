@@ -36,8 +36,6 @@ const validateId = (id) => {
 //   return { type: null, message: '' };
 // };
 
-
-
 // const validateAlreadyDriver = async (travelId) => {
 //   const travel = await travelModel.findById(travelId);
 
