@@ -1,7 +1,6 @@
 module.exports = (req, res, next) => {
-  const { name, email, phone } = req.body;
-
-  if (!name || !email || !phone) {
+  const { name } = req.body;
+  if (!name) {
     return res.status(400).json({ message: 'fields not passed' });
   }
 

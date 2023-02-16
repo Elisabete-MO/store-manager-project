@@ -17,15 +17,15 @@ const findById = async (productId) => {
   return { type: null, message: product };
 };
 
-// const createproduct = async (name, email, phone) => {
-//   const error = schema.validateNewproduct(name, email, phone);
-//   if (error.type) return error;
+const createProduct = async (name) => {
+  const error = schema.validateNewProduct(name);
+  if (error.type) return error;
 
-//   const newproductId = await productModel.insert({ name, email, phone });
-//   const newproduct = await productModel.findById(newproductId);
+  const newproductId = await productModel.insert({ name });
+  const newproduct = await productModel.findById(newproductId);
 
-//   return { type: null, message: newproduct };
-// };
+  return { type: null, message: newproduct };
+};
 
 // const productExists = async (productId) => {
 //   const product = await productModel.findById(productId);
@@ -73,6 +73,6 @@ const findById = async (productId) => {
 module.exports = {
   findAll,
   findById,
-  // createproduct,
+  createProduct,
   // requestTravel,
 };

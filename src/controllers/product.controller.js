@@ -14,15 +14,14 @@ const getProduct = async (req, res) => {
   res.status(200).json(message);
 };
 
-// const createProduct = async (req, res) => {
-//   const { name, email, phone } = req.body;
-  
-//   const { type, message } = await productService.createproduct(name, email, phone);
+const createProduct = async (req, res) => {
+  const { name } = req.body;
+  const { type, message } = await productService.createProduct(name);
 
-//   if (type) return res.status(errorMap.mapError(type)).json(message);
+  if (type) return res.status(errorMap.mapError(type)).json(message);
 
-//   res.status(201).json(message);
-// };
+  res.status(201).json(message);
+};
 
 // const createTravel = async (req, res) => {
 //   const { productId } = req.params;
@@ -43,6 +42,6 @@ const getProduct = async (req, res) => {
 module.exports = {
   listProducts,
   getProduct,
-  // createProduct,
+  createProduct,
   // createTravel,
 };

@@ -1,9 +1,16 @@
-const { idSchema } = require('./schemas');
+const { idSchema, nameSchema } = require('./schemas');
 // const { productModel } = require('../../models');
 
 const validateId = (id) => {
   const { error } = idSchema.validate(id);
   if (error) return { type: 'INVALID_VALUE', message: '"id" must be a number' };
+  
+  return { type: null, message: '' };
+};
+
+const validateNewProduct = (name) => {
+  const { error } = nameSchema.validate(name);
+  if (error) return { type: 'INVALID_VALUE', message: error.message };
   
   return { type: null, message: '' };
 };
@@ -17,14 +24,6 @@ const validateId = (id) => {
 //   const driver = await driverModel.findById(driverId);
 //   if (!driver) return { type: 'DRIVER_NOT_FOUND', message: 'driver id not found' };
 
-//   return { type: null, message: '' };
-// };
-
-// const validateNewPassenger = (name, email, phone) => {
-//   const { error } = addPassengerSchema
-//     .validate({ name, email, phone });
-//   if (error) return { type: 'INVALID_VALUE', message: error.message };
-  
 //   return { type: null, message: '' };
 // };
 
@@ -48,7 +47,7 @@ const validateId = (id) => {
 
 module.exports = {
   validateId,
-  // validateNewPassenger,
+  validateNewProduct,
   // validateRequestTravelSchema,
   // validateInputValues,
   // validateAlreadyDriver,
