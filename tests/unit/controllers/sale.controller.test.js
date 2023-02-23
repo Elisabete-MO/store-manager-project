@@ -5,78 +5,78 @@ const sinonChai = require('sinon-chai');
 const { expect } = chai;
 chai.use(sinonChai);
 
-const { productService } = require('../../../src/services');
-const { productController } = require('../../../src/controllers');
-const { products, invalidValue, validName, newProduct } = require('./mocks/product.controller.mock');
+const { saleService } = require('../../../src/services');
+const { saleController } = require('../../../src/controllers');
+const { sales, invalidValue, validName, newSale } = require('./mocks/sale.controller.mock');
 
-describe('Teste de unidade do controller de produtos', function () {
-  describe('Recuperando a lista de produtos', function () {
-    it('Deve retornar o status 200 e a lista de produtos', async function () {
+describe('Teste de unidade do controller de vendas (sale)', function () {
+  describe('Recuperando a lista de vendas', function () {
+    it('Deve retornar o status 200 e a lista de vendas', async function () {
       const res = {};
       const req = {};
       
       res.status = sinon.stub().returns(res);
       res.json = sinon.stub().returns();
       sinon
-        .stub(productService, 'findAll')
-        .resolves({ type: null, message: products });
-      await productController.listProducts(req, res);
+        .stub(saleService, 'findAll')
+        .resolves({ type: null, message: sales });
+      await saleController.listSales(req, res);
       expect(res.status).to.have.been.calledWith(200);
-      expect(res.json).to.have.been.calledWith(products);
+      expect(res.json).to.have.been.calledWith(sales);
     });
   });
 
-  describe('Busca de um produto', function () {
+  describe('Busca de uma venda', function () {
     it('retorna um erro caso receba um ID inválido', async function () {
       const res = {};
       const req = { params: { id: invalidValue }, };
       res.status = sinon.stub().returns(res);
       res.json = sinon.stub().returns();
       sinon
-        .stub(productService, 'findById')
+        .stub(saleService, 'findById')
         .resolves({ type: 'INVALID_VALUE', message: '"id" must be a number'  });
-      await productController.getProduct(req, res);
+      await saleController.getSale(req, res);
       expect(res.status).to.have.been.calledWith(422); 
       expect(res.json).to.have.been.calledWith({ message: '"id" must be a number' });
     });
 
-    it('retorna um erro caso o produto não exista', async function () {
+    it('retorna um erro caso a venda não exista', async function () {
       const res = {};
       const req = { params: { id: 9999 }, };
       res.status = sinon.stub().returns(res);
       res.json = sinon.stub().returns();
       sinon
-        .stub(productService, 'findById')
-        .resolves({ type: 'PRODUCT_NOT_FOUND', message: 'Product not found' });
-      await productController.getProduct(req, res);
+        .stub(saleService, 'findById')
+        .resolves({ type: 'SALE_NOT_FOUND', message: 'Sale not found' });
+      await saleController.getSale(req, res);
       expect(res.status).to.have.been.calledWith(404); 
-      expect(res.json).to.have.been.calledWith({ message: 'Product not found' });
+      expect(res.json).to.have.been.calledWith({ message: 'Sale not found' });
     });
 
-    it('deve retornar o status 200 e o produto caso exista', async function () {
+    it('deve retornar o status 200 e a venda em caso de sucesso', async function () {
       const res = {};
       const req = { params: { id: 1 }, };
       res.status = sinon.stub().returns(res);
       res.json = sinon.stub().returns();
       sinon
-        .stub(productService, 'findById')
-        .resolves({ type: null, message: products[0] });
-      await productController.getProduct(req, res);
+        .stub(saleService, 'findById')
+        .resolves({ type: null, message: sales[0] });
+      await saleController.getSale(req, res);
       expect(res.status).to.have.been.calledWith(200);
-      expect(res.json).to.have.been.calledWith(products[0]);
+      expect(res.json).to.have.been.calledWith(sales[0]);
     });
   });
   
-  describe('Cadastro de um produto', function () {
-    it('retorna um erro caso não receba um nome de produto', async function () {
+  describe('Cadastro de uma venda', function () {
+    it('retorna um erro caso não receba um nome de venda', async function () {
       const res = {};
       const req = { body: { name: '' }, };
       res.status = sinon.stub().returns(res);
       res.json = sinon.stub().returns();
       sinon
-        .stub(productService, 'createProduct')
+        .stub(saleService, 'createSale')
         .resolves({ type: 'DATA_REQUIRED', message: '"name" is required'  });
-      await productController.createProduct(req, res);
+      await saleController.createSale(req, res);
       console.log(res.status);
       expect(res.status).to.have.been.calledWith(400); 
       expect(res.json).to.have.been.calledWith({ message: '"name" is required' });
@@ -88,24 +88,24 @@ describe('Teste de unidade do controller de produtos', function () {
       res.status = sinon.stub().returns(res);
       res.json = sinon.stub().returns();
       sinon
-        .stub(productService, 'createProduct')
+        .stub(saleService, 'createSale')
         .resolves({ type: 'INVALID_VALUE', message: '"name" length must be at least 5 characters long' });
-      await productController.createProduct(req, res);
+      await saleController.createSale(req, res);
       expect(res.status).to.have.been.calledWith(422); 
       expect(res.json).to.have.been.calledWith({ message: '"name" length must be at least 5 characters long' });
     });
 
-    it('deve retornar o status 201 e o produto em caso de sucesso', async function () {
+    it('deve retornar o status 201 e o venda em caso de sucesso', async function () {
       const res = {};
       const req = { body: { name: validName }, };
       res.status = sinon.stub().returns(res);
       res.json = sinon.stub().returns();
       sinon
-        .stub(productService, 'createProduct')
-        .resolves({ type: null, message: newProduct });
-      await productController.createProduct(req, res);
+        .stub(saleService, 'createSale')
+        .resolves({ type: null, message: newSale });
+      await saleController.createSale(req, res);
       expect(res.status).to.have.been.calledWith(201);
-      expect(res.json).to.have.been.calledWith(newProduct);
+      expect(res.json).to.have.been.calledWith(newSale);
     });
   });
 

@@ -15,7 +15,7 @@ describe('Verificando service de produtos', function () {
     });
   });
 
-  describe('busca de um produto', function () {
+  describe('Busca de um produto', function () {
     it('retorna um erro caso receba um ID inválido', async function () {
       const result = await productService.findById('a');
       expect(result.type).to.equal('INVALID_VALUE');
@@ -32,6 +32,21 @@ describe('Verificando service de produtos', function () {
     it('retorna o produto caso exista', async function () {
       sinon.stub(productModel, 'findById').resolves(products[0]);
       const result = await productService.findById(1);
+      expect(result.type).to.equal(null);
+      expect(result.message).to.deep.equal(products[0]);
+    });
+  });
+
+  describe('Cadastro de um produto', function () {
+    it('retorna um erro caso receba um nome com menos de 5 caracteres', async function () {
+      const result = await productService.createProduct(invalidValue);
+      expect(result.type).to.equal('INVALID_VALUE');
+      expect(result.message).to.equal('"name" length must be at least 5 characters long');
+    });
+    
+    it('deve retornar o produto em caso de sucesso', async function () {
+      sinon.stub(productModel, 'insert').resolves(1);
+      const result = await productService.createProduct(validName);
       expect(result.type).to.equal(null);
       expect(result.message).to.deep.equal(products[0]);
     });

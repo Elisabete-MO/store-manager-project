@@ -4,14 +4,19 @@ const connection = require('./connection');
 
 const findAll = async () => {
   const [result] = await connection.execute(
-    'SELECT * FROM StoreManager.sales',
+    `SELECT t1.sale_id, t2.date, t1.product_id, t1.quantity FROM StoreManager.sales_products t1
+    INNER JOIN StoreManager.sales t2 ON t1.sale_id = t2.id
+    ORDER BY t1.sale_id, t1.product_id;`,
   );
   return camelize(result); 
 };
 
 const findById = async (saleId) => {
-  const [[sale]] = await connection.execute(
-    'SELECT * FROM StoreManager.sales WHERE id = ?',
+  const [sale] = await connection.execute(
+    `SELECT t2.date, t1.product_id, t1.quantity FROM StoreManager.sales_products t1
+    INNER JOIN StoreManager.sales t2 ON t1.sale_id = t2.id
+    WHERE t1.sale_id = ?
+    ORDER BY t1.product_id;`,
     [saleId],
   );
   return camelize(sale);
