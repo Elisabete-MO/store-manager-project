@@ -3,10 +3,10 @@ const Joi = require('joi');
 const idSchema = Joi.number().integer().min(1).required();
 const nameSchema = Joi.string().min(5).required();
 
-// const addPassengerSchema = Joi.object({
-//   email: Joi.string().email().required(),
-//   phone: Joi.string().min(9).max(20).required(),
-// });
+const createSaleSchema = Joi.object({
+  productId: idSchema,
+  quantity: Joi.number().integer().min(1).required(),
+});
 
 // const pointSchema = Joi.string().min(3).required();
 
@@ -24,6 +24,7 @@ const nameSchema = Joi.string().min(5).required();
 module.exports = {
   idSchema,
   nameSchema,
+  createSaleSchema,
   // addPassengerSchema,
   // addRequestTravelSchema,
 };

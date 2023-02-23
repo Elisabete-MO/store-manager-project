@@ -20,6 +20,7 @@ const findById = async (productId) => {
 const createProduct = async (name) => {
   const error = schema.validateNewProduct(name);
   if (error.type) return error;
+  console.log(error.type);
 
   const newproductId = await productModel.insert({ name });
   const newproduct = await productModel.findById(newproductId);
