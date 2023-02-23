@@ -28,12 +28,17 @@ const findById = async (saleId) => {
 };
 
 const createSale = async (sale) => {
+  let newSale = { id: '', itemsSold: '' };
   const error = schema.validateNewSale(sale);
   if (error.type) return error;
   const response = await validateProductId(sale);
   if (!response) return { type: 'PRODUCT_NOT_FOUND', message: 'Product not found' };
   const newSaleId = await saleModel.insert(sale);
-  const newSale = await saleModel.findSalesProductById(newSaleId);
+  const sales = await saleModel.findSalesProductById(newSaleId);
+  newSale = {
+    id: newSaleId,
+    itemsSold: sales,
+  };
   return { type: null, message: newSale };
 };
 

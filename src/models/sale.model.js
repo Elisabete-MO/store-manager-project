@@ -18,12 +18,13 @@ const findById = async (saleId) => {
 };
 
 const findSalesProductById = async (saleId) => {
-  const [[sale]] = await connection.execute(
-    `SELECT sales_products.sale_id AS id, JSON_ARRAYAGG(JSON_OBJECT('productId',
-     sales_products.product_id, 'quantity', sales_products.quantity)) AS itemsSold 
-     FROM StoreManager.sales_products WHERE sale_id = ? GROUP BY id`, [saleId],
+  const [sale] = await connection.execute(
+    // `SELECT sales_products.sale_id AS id, JSON_ARRAYAGG(JSON_OBJECT('productId',
+    //  sales_products.product_id, 'quantity', sales_products.quantity)) AS itemsSold 
+    //  FROM StoreManager.sales_products WHERE sale_id = ? GROUP BY id`, [saleId],
+    `SELECT sales_products.product_id AS productId, sales_products.quantity AS quantity 
+    FROM StoreManager.sales_products WHERE sales_products.sale_id = ?`, [saleId],
   );
-  console.log(sale);
   return (sale);
 };
 
@@ -33,7 +34,6 @@ const insert = async (sale) => {
   );
 
   await Promise.all(sale.map(async (dados) => {
-    console.log(dados, insertId);
     const columns = Object.keys(snakeize(dados)).join(', ');
 
     const placeholders = Object.keys(dados)
