@@ -29,7 +29,8 @@ const findById = async (saleId) => {
 
 const createSale = async (sale) => {
   let newSale = { id: '', itemsSold: '' };
-  const error = schema.validateNewSale(sale);
+  const { productId, quantity } = sale;
+  const error = schema.validateNewSale(productId, quantity);
   if (error.type) return error;
   const response = await validateProductId(sale);
   if (!response) return { type: 'PRODUCT_NOT_FOUND', message: 'Product not found' };

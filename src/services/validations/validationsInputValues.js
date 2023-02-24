@@ -15,25 +15,13 @@ const validateNewProduct = (name) => {
   return { type: null, message: '' };
 };
 
-const validateNewSale = async (sale) => { 
+const validateNewSale = (sale) => { 
   const { error } = createSaleSchema.validate(sale);
   if (error) { 
     return { type: 'INVALID_VALUE', message: error.message };
   }
   return { type: null, message: '' };
 };
-
-// const validateInputValues = async ({ travelId, driverId }) => {
-//   /* Valida se travelId existe */
-//   const travel = await travelModel.findById(travelId);
-//   if (!travel) return { type: 'TRAVEL_NOT_FOUND', message: 'travel id not found' };
-
-//   /* Valida se driverId existe */
-//   const driver = await driverModel.findById(driverId);
-//   if (!driver) return { type: 'DRIVER_NOT_FOUND', message: 'driver id not found' };
-
-//   return { type: null, message: '' };
-// };
 
 // const validateRequestTravelSchema = (passengerId, startingAddress, endingAddress, waypoints) => {
 //   const { error } = addRequestTravelSchema
@@ -57,7 +45,4 @@ module.exports = {
   validateId,
   validateNewProduct,
   validateNewSale,
-  // validateRequestTravelSchema,
-  // validateInputValues,
-  // validateAlreadyDriver,
 };

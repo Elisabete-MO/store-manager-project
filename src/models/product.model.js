@@ -2,6 +2,14 @@ const camelize = require('camelize');
 const snakeize = require('snakeize');
 const connection = require('./connection');
 
+const dataModel = (data) => {
+  const columns = Object.keys(snakeize(data)).join(', ');
+  const placeholders = Object.keys(data)
+    .map((_key) => '?')
+    .join(', ');
+  return ({ columns, placeholders });
+};
+
 const findAll = async () => {
   const [result] = await connection.execute(
     'SELECT * FROM StoreManager.products',
@@ -18,12 +26,7 @@ const findById = async (productId) => {
 };
 
 const insert = async (product) => {
-  const columns = Object.keys(snakeize(product)).join(', ');
-
-  const placeholders = Object.keys(product)
-    .map((_key) => '?')
-    .join(', ');
-
+  const { columns, placeholders } = dataModel(product);
   const [{ insertId }] = await connection.execute(
     `INSERT INTO StoreManager.products (${columns}) VALUE (${placeholders})`,
     [...Object.values(product)],
@@ -32,8 +35,17 @@ const insert = async (product) => {
   return insertId;
 };
 
+const update = async (id, name) => {
+  await connection.execute(
+    'UPDATE StoreManager.products SET name = (?) WHERE id = (?)',
+    [name, id],
+    );
+  return id;
+};
+
 module.exports = {
   findAll,
   findById,
   insert,
+  update,
 };

@@ -10,10 +10,6 @@ const createSaleSchema = Joi.object({
 
 // const pointSchema = Joi.string().min(3).required();
 
-// const waypointSchema = Joi.object({
-//   address: pointSchema,
-//   stopOrder: Joi.number().integer().min(1) });
-
 // const addRequestTravelSchema = Joi.object({
 //   passengerId: idSchema,
 //   startingAddress: pointSchema,
@@ -25,6 +21,4 @@ module.exports = {
   idSchema,
   nameSchema,
   createSaleSchema,
-  // addPassengerSchema,
-  // addRequestTravelSchema,
 };

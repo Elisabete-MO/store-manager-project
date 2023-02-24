@@ -1,6 +1,12 @@
 const { productModel } = require('../models');
 const schema = require('./validations/validationsInputValues');
 
+const validateIdExist = async (id) => {
+  const product = await productModel.findById(id);
+  if (!product) return { type: 'PRODUCT_NOT_FOUND', message: 'Product not found' };
+  return { type: null, message: '' };
+};
+
 const findAll = async () => {
   const products = await productModel.findAll();
   return { type: null, message: products };
@@ -20,19 +26,25 @@ const findById = async (productId) => {
 const createProduct = async (name) => {
   const error = schema.validateNewProduct(name);
   if (error.type) return error;
-  console.log(error.type);
+  const newProductId = await productModel.insert({ name });
+  const newProduct = await productModel.findById(newProductId);
 
-  const newproductId = await productModel.insert({ name });
-  const newproduct = await productModel.findById(newproductId);
-
-  return { type: null, message: newproduct };
+  return { type: null, message: newProduct };
 };
 
-// const productExists = async (productId) => {
-//   const product = await productModel.findById(productId);
-//   if (product) return true;
-//   return false;
-// };
+const updateProduct = async (id, name) => {
+  const respId = schema.validateId(id);
+  if (respId.type) return respId;
+  const respName = schema.validateNewProduct(name);
+  if (respName.type) return respName;
+  const findId = await validateIdExist(id);
+  if (findId.type) return findId;
+
+  await productModel.update(id, name);
+  const updatedProduct = await productModel.findById(id);
+
+  return { type: null, message: updatedProduct };
+};
 
 // const saveWaypoints = (waypoints, travelId) => {
 //   if (waypoints && waypoints.length > 0) {
@@ -75,5 +87,5 @@ module.exports = {
   findAll,
   findById,
   createProduct,
-  // requestTravel,
+  updateProduct,
 };

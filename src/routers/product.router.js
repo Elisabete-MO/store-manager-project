@@ -23,6 +23,7 @@ router.post(
 
 router.put(
   '/:id',
+  validateNewProductFields,
   productController.updateProduct,
 );
 
