@@ -77,7 +77,6 @@ describe('Teste de unidade do controller de produtos', function () {
         .stub(productService, 'createProduct')
         .resolves({ type: 'DATA_REQUIRED', message: '"name" is required'  });
       await productController.createProduct(req, res);
-      console.log(res.status);
       expect(res.status).to.have.been.calledWith(400); 
       expect(res.json).to.have.been.calledWith({ message: '"name" is required' });
     });

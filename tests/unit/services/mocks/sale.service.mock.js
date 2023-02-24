@@ -1,7 +1,17 @@
-const invalidValue = 'a';
 const newSale = [
   {
     "productId": 1,
+    "quantity": 5
+  },
+  {
+    "productId": 2,
+    "quantity": 10
+  }
+];
+
+const idSale = [
+  {
+    "productId": 'a',
     "quantity": 5
   },
   {
@@ -44,9 +54,24 @@ const salesById = [
   }
 ]
 
+const newSaleInsert = {
+  "id": 1,
+  "itemsSold": [
+    {
+      "productId": 1,
+      "quantity": 5
+    },
+    {
+      "productId": 2,
+      "quantity": 10
+    }
+  ]
+}
+
 module.exports = {
   sales,
-  invalidValue,
   newSale,
   salesById,
+  idSale,
+  newSaleInsert,
 };
