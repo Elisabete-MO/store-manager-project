@@ -21,10 +21,9 @@ router.post(
   productController.createProduct,
 );
 
-// router.post(
-//   '/:productId/request/travel',
-//   // validateRequestTravelSchema,
-//   productController.createTravel,
-// );
+router.put(
+  '/:id',
+  productController.updateProduct,
+);
 
 module.exports = router;

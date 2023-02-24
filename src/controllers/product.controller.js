@@ -22,6 +22,14 @@ const createProduct = async (req, res) => {
   res.status(201).json(message);
 };
 
+const updateProduct = async (req, res) => {
+  const { id } = req.params;
+  const { type, message } = await productService.createProduct(name);
+  if (type) return res.status(errorMap.mapError(type)).json({ message });
+
+  res.status(201).json(message);
+};
+
 // const createTravel = async (req, res) => {
 //   const { productId } = req.params;
 //   const { startingAddress, endingAddress, waypoints } = req.body;
@@ -42,5 +50,5 @@ module.exports = {
   listProducts,
   getProduct,
   createProduct,
-  // createTravel,
+  updateProduct,
 };
