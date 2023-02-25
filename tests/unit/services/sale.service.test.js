@@ -1,11 +1,11 @@
 const { expect } = require('chai');
 const sinon = require('sinon');
 const { saleService } = require('../../../src/services');
-const { saleModel } = require('../../../src/models');
+const { saleModel, productModel } = require('../../../src/models');
 
-const { sales, newSale, salesById, idSale, newSaleInsert } = require('./mocks/sale.service.mock');
+const { sales, newSale, salesById, idSale, newSaleInsert, productQuantityById, products } = require('./mocks/sale.service.mock');
 
-describe('Teste de unidade do controller de vendas (sale)', function () {
+describe('Teste de unidade do service de vendas (sale)', function () {
   describe('Recuperando a lista de vendas', function () {
     it('Deve retornar a lista de vendas', async function () {
       sinon.stub(saleModel, 'findAll').resolves(sales);
@@ -38,14 +38,24 @@ describe('Teste de unidade do controller de vendas (sale)', function () {
   });
 
   describe('Cadastro de uma venda', function () {
+    // it('retorna um erro caso receba um ID inválido', async function () {
+    //   sinon.stub(schema, 'validateNewSale').returns({ type: 'INVALID_PRODUCT_ID', message: 'Invalid product id' });
+    //   const result = await saleService.createSale(idSale);
+    //   expect(result.type).to.equal('INVALID_VALUE');
+    //   expect(result.message).to.equal('"id" must be a number');
+    // });
+
     it('retorna um erro caso não encontre um produto', async function () {
+      sinon.stub(productModel, 'findById').resolves(undefined);
       const result = await saleService.createSale(idSale);
       expect(result.type).to.equal('PRODUCT_NOT_FOUND');
       expect(result.message).to.equal('Product not found');
     });
     
-    it('deve retornar o produto em caso de sucesso', async function () {
+    it('deve retornar a venda em caso de sucesso', async function () {
+      sinon.stub(productModel, 'findById').resolves(products);
       sinon.stub(saleModel, 'insert').resolves(1);
+      sinon.stub(saleModel, 'findSalesProductById').resolves(productQuantityById);
       const result = await saleService.createSale(newSale);
       expect(result.type).to.equal(null);
       expect(result.message).to.deep.equal(newSaleInsert);

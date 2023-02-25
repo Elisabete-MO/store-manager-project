@@ -46,6 +46,17 @@ const updateProduct = async (id, name) => {
   return { type: null, message: updatedProduct };
 };
 
+const deleteProduct = async (id) => {
+  const error = schema.validateId(id);
+  if (error.type) return error;
+  const findId = await validateIdExist(id);
+  if (findId.type) return findId;
+
+  await productModel.deleteProduct(id);
+
+  return { type: null, message: '' };
+};
+
 // const saveWaypoints = (waypoints, travelId) => {
 //   if (waypoints && waypoints.length > 0) {
 //     return waypoints.map(async (value) => {
@@ -88,4 +99,5 @@ module.exports = {
   findById,
   createProduct,
   updateProduct,
+  deleteProduct,
 };

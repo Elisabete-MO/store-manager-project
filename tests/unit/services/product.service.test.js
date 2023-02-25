@@ -45,10 +45,11 @@ describe('Verificando service de produtos', function () {
     });
     
     it('deve retornar o produto em caso de sucesso', async function () {
-      sinon.stub(productModel, 'insert').resolves(1);
+      sinon.stub(productModel, 'insert').resolves(5);
+      sinon.stub(productModel, 'findById').resolves(products[3]);
       const result = await productService.createProduct(validName);
       expect(result.type).to.equal(null);
-      expect(result.message).to.deep.equal(products[0]);
+      expect(result.message).to.deep.equal(products[3]);
     });
   });
   

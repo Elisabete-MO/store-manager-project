@@ -54,6 +54,17 @@ const salesById = [
   }
 ]
 
+const productQuantityById = [
+  {
+    "productId": 1,
+    "quantity": 5
+  },
+  {
+    "productId": 2,
+    "quantity": 10
+  }
+]
+
 const newSaleInsert = {
   "id": 1,
   "itemsSold": [
@@ -68,10 +79,23 @@ const newSaleInsert = {
   ]
 }
 
+const products = [
+  {
+    id: 1,
+    name: 'Martelo de Thor',
+  },
+  {
+    id: 2,
+    name: 'Traje de encolhimento',
+  },
+];
+
 module.exports = {
   sales,
   newSale,
   salesById,
   idSale,
   newSaleInsert,
+  productQuantityById,
+  products,
 };
