@@ -43,8 +43,17 @@ const createSale = async (sale) => {
   return { type: null, message: newSale };
 };
 
+const deleteSale = async (id) => {
+  const findId = await findById(id);
+  if (findId.type) return findId; 
+  await saleModel.deleteSale(id);
+
+  return { type: null, message: '' };
+};
+
 module.exports = {
   findAll,
   findById,
   createSale,
+  deleteSale,
 };

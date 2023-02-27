@@ -47,9 +47,7 @@ const updateProduct = async (id, name) => {
 };
 
 const deleteProduct = async (id) => {
-  const error = schema.validateId(id);
-  if (error.type) return error;
-  const findId = await validateIdExist(id);
+  const findId = await findById(id);
   if (findId.type) return findId;
 
   await productModel.deleteProduct(id);
