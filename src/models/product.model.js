@@ -57,4 +57,5 @@ module.exports = {
   insert,
   update,
   deleteProduct,
+  dataModel,
 };

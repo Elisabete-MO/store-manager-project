@@ -1,6 +1,6 @@
 const camelize = require('camelize');
-const snakeize = require('snakeize');
 const connection = require('./connection');
+const { dataModel } = require('./product.model');
 
 const findAll = async () => {
   const [result] = await connection.execute(
@@ -39,12 +39,7 @@ const insert = async (sale) => {
   );
 
   await Promise.all(sale.map(async (dados) => {
-    const columns = Object.keys(snakeize(dados)).join(', ');
-
-    const placeholders = Object.keys(dados)
-      .map((_key) => '?')
-      .join(', ');
-
+    const { columns, placeholders } = dataModel(dados);
     await connection.execute(
       `INSERT INTO StoreManager.sales_products (sale_id, ${columns}) VALUE (?, ${placeholders})`,
       [insertId, ...Object.values(dados)],
@@ -63,10 +58,24 @@ const deleteSale = async (id) => {
   return id;
 };
 
+const update = async (saleId, sale) => {
+  // const keys = Object.keys(snakeize(dados));
+  // const values = keys.map(key => `${key} = ?`).join(', ');
+  await Promise.all(sale.map(async (dados) => {
+    await connection.execute(
+      `UPDATE StoreManager.sales_products
+      SET quantity = (?) WHERE product_id = (?) AND sale_id = (?)`,
+      [dados.quantity, dados.productId, saleId],
+    );
+  }));
+  return saleId;
+};
+
 module.exports = {
   findAll,
   findById,
   findSalesProductById,
   insert,
   deleteSale,
+  update,
 };

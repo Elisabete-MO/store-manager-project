@@ -1,12 +1,6 @@
 const { productModel } = require('../models');
 const schema = require('./validations/validationsInputValues');
 
-const validateIdExist = async (id) => {
-  const product = await productModel.findById(id);
-  if (!product) return { type: 'PRODUCT_NOT_FOUND', message: 'Product not found' };
-  return { type: null, message: '' };
-};
-
 const findAll = async () => {
   const products = await productModel.findAll();
   return { type: null, message: products };
@@ -33,12 +27,10 @@ const createProduct = async (name) => {
 };
 
 const updateProduct = async (id, name) => {
-  const respId = schema.validateId(id);
-  if (respId.type) return respId;
+  const findId = await findById(id);
+  if (findId.type) return findId;
   const respName = schema.validateNewProduct(name);
   if (respName.type) return respName;
-  const findId = await validateIdExist(id);
-  if (findId.type) return findId;
 
   await productModel.update(id, name);
   const updatedProduct = await productModel.findById(id);
