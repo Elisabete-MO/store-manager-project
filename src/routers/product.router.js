@@ -6,6 +6,11 @@ const validateNewProductFields = require('../middlewares/validateNewProductField
 const router = express.Router();
 
 router.get(
+  '/search',
+  productController.getByNameProduct,
+);
+
+router.get(
   '/',
   productController.listProducts,
 );

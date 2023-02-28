@@ -17,6 +17,14 @@ const findById = async (productId) => {
   return { type: null, message: product };
 };
 
+const findByName = async (productName) => {
+  const product = await productModel.findByName(productName);
+  if (!product || product === undefined) {
+    return { type: 'PRODUCT_NOT_FOUND', message: 'Product not found' };
+  }
+  return { type: null, message: product };
+};
+
 const createProduct = async (name) => {
   const error = schema.validateNewProduct(name);
   if (error.type) return error;
@@ -47,46 +55,10 @@ const deleteProduct = async (id) => {
   return { type: null, message: '' };
 };
 
-// const saveWaypoints = (waypoints, travelId) => {
-//   if (waypoints && waypoints.length > 0) {
-//     return waypoints.map(async (value) => {
-//       await waypointModel.insert({
-//         address: value.address,
-//         stopOrder: value.stopOrder,
-//         travelId,
-//       });
-//     });
-//   }
-
-//   return [];
-// };
-
-// const requestTravel = async (productId, startingAddress, endingAddress, waypoints) => {
-//   const validationResult = schema.validateRequestTravelSchema(
-//     productId,
-//     startingAddress,
-//     endingAddress,
-//     waypoints,
-//   );
-
-//   if (validationResult.type) return validationResult;
-
-//   if (await productExists(productId)) {
-//       const travelId = await travelModel.insert({
-//           productId,
-//           startingAddress,
-//           endingAddress,
-//       });
-
-//       await Promise.all(saveWaypoints(waypoints, travelId));
-//       const travel = await travelModel.findById(travelId);
-//       return { type: null, message: travel };
-//   }
-// };
-
 module.exports = {
   findAll,
   findById,
+  findByName,
   createProduct,
   updateProduct,
   deleteProduct,

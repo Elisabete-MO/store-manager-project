@@ -25,6 +25,14 @@ const findById = async (productId) => {
   return camelize(product);
 };
 
+const findByName = async (productName) => {
+  const [product] = await connection.execute(
+    'SELECT * FROM StoreManager.products WHERE name LIKE (?)',
+    [`%${productName}%`],
+  );
+  return camelize(product);
+};
+
 const insert = async (product) => {
   const { columns, placeholders } = dataModel(product);
   const [{ insertId }] = await connection.execute(
@@ -54,6 +62,7 @@ const deleteProduct = async (id) => {
 module.exports = {
   findAll,
   findById,
+  findByName,
   insert,
   update,
   deleteProduct,
