@@ -1,5 +1,5 @@
 const validName = 'Capa do Batman';
-const invalidValue = 'a';
+const invalidValue = 'z';
 
 const products = [
   {
