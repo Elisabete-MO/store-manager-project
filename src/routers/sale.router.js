@@ -20,15 +20,15 @@ router.post(
   saleController.createSale,
 );
 
-router.delete(
-  '/:id',
-  saleController.deleteSale,
-);
-
 router.put(
   '/:id',
   validateNewSaleFields,
   saleController.updateSale,
+);
+
+router.delete(
+  '/:id',
+  saleController.deleteSale,
 );
 
 module.exports = router;
