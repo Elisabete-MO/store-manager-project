@@ -34,7 +34,6 @@ router.put(
 
 router.delete(
   '/:id',
-  // validateIdMiddleware,
   productController.deleteProduct,
 );
 
