@@ -79,6 +79,16 @@ const newSaleInsert = {
   ]
 }
 
+const itemsUpdated = {
+  "id": 1,
+  "itemsUpdated": [
+    {
+      "productId": 1,
+      "quantity": 5
+    },
+  ]
+}
+
 const products = [
   {
     id: 1,
@@ -98,4 +108,5 @@ module.exports = {
   newSaleInsert,
   productQuantityById,
   products,
+  itemsUpdated,
 };

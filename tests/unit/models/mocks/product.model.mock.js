@@ -1,3 +1,6 @@
+const validName = 'Martelo';
+const invalidValue = 'z';
+
 const products = [
   {
     id: 1,
@@ -11,6 +14,10 @@ const products = [
     id: 3,
     name: 'Escudo do Capitão América',
   },
+  {
+    id: 5,
+    name: 'Capa do Batman',
+  },
 ];
 
 const newProduct = {
@@ -20,4 +27,5 @@ const newProduct = {
 module.exports = {
   products,
   newProduct,
+  validName,
 };

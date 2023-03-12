@@ -24,6 +24,18 @@ describe('Testes de unidade do model de vendas', function () {
     expect(result).to.equal(1);
   });
 
+  it('Atualização de uma venda', async function () {
+    sinon.stub(connection, 'execute').resolves([{ id: 42 }]);
+    const result = await saleModel.update(42, newSale);
+    expect(result).to.equal(42);
+  });
+
+  it('Remoção de uma venda', async function () {
+    sinon.stub(connection, 'execute').resolves([{ id: 42 }]);
+    const result = await saleModel.deleteSale(42);
+    expect(result).to.equal(42);
+  });
+
   afterEach(function () {
     sinon.restore();
   });

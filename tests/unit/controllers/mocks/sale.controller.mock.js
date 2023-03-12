@@ -44,9 +44,21 @@ const salesById = [
   }
 ]
 
+const salesUpdated = [
+  { 
+    "saleId": 1,
+    "itemsUpdated": [
+    {
+      "productId": 1,
+      "quantity":10
+    },
+  ]}
+]
+
 module.exports = {
   sales,
   invalidValue,
   newSale,
   salesById,
+  salesUpdated
 };
