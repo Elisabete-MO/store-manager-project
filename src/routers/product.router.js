@@ -1,7 +1,5 @@
 const express = require('express');
 const { productController } = require('../controllers');
-const validateIdMiddleware = require('../middlewares/validateIdMiddleware');
-const validateId = require('../middlewares/validateIdMiddleware');
 
 const validateNewProductFields = require('../middlewares/validateNewProductFields');
 
