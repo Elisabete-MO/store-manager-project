@@ -26,15 +26,15 @@ router.post(
   productController.createProduct,
 );
 
+router.delete(
+  '/:id',
+  productController.deleteProduct,
+);
+
 router.put(
   '/:id',
   validateNewProductFields,
   productController.updateProduct,
-);
-
-router.delete(
-  '/:id',
-  productController.deleteProduct,
 );
 
 module.exports = router;
